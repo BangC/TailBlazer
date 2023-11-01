@@ -13,6 +13,7 @@ public interface IAttachedListBox
 public interface ISelectionMonitor: IDisposable
 {
     string GetSelectedText();
+    string GetSelectedTextFilePosition();
 
     IEnumerable<string> GetSelectedItems();
 

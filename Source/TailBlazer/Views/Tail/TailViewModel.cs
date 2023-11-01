@@ -58,6 +58,7 @@ public class TailViewModel: AbstractNotifyPropertyChanged, ILinesVisualisation, 
     public IProperty<int> MaximumChars { get; }
 
     public ICommand CopyToClipboardCommand { get; }
+    public ICommand CopyFilePositionToClipboardCommand { get; }
     public ICommand OpenFileCommand { get; }
     public ICommand OpenFolderCommand { get; }
     public ICommand CopyPathToClipboardCommand { get; }

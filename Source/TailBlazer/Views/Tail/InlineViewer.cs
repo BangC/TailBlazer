@@ -26,6 +26,7 @@ public class InlineViewer : AbstractNotifyPropertyChanged, ILinesVisualisation
     public ReadOnlyObservableCollection<LineProxy> Lines => _data;
     public IProperty<int> Count { get; }
     public ICommand CopyToClipboardCommand { get; }
+    public ICommand CopyFilePositionToClipboardCommand { get; }
     public IProperty<int> MaximumChars { get; }
     public ISelectionMonitor SelectionMonitor { get; }
 
@@ -46,6 +47,7 @@ public class InlineViewer : AbstractNotifyPropertyChanged, ILinesVisualisation
         if (themeProvider == null) throw new ArgumentNullException(nameof(themeProvider));
         SelectionMonitor = selectionMonitor ?? throw new ArgumentNullException(nameof(selectionMonitor));
         CopyToClipboardCommand = new Command(() => clipboardHandler.WriteToClipboard(selectionMonitor.GetSelectedText()));
+        CopyFilePositionToClipboardCommand = new Command(() => clipboardHandler.WriteToClipboard(selectionMonitor.GetSelectedTextFilePosition()));
 
         _isSettingScrollPosition = false;
         var pageSize = this.WhenValueChanged(vm=>vm.PageSize);

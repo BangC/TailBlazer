@@ -61,6 +61,34 @@ public class SelectionMonitor :  ISelectionMonitor, IAttachedListBox
         return GetSelectedItems().ToDelimited(Environment.NewLine);
     }
 
+    public string GetSelectedTextFilePosition()
+    {
+        var selItems = GetSelectedItems();
+        if (selItems.Count() <= 0)
+        {
+            goto END_GetSelectedTextFilePosition;
+        }
+
+        var lineCheckString = selItems.FirstOrDefault();
+
+        var lsSpace = lineCheckString.Trim().Split(' ');
+        if (lsSpace.Count() < 1)
+        {
+            goto END_GetSelectedTextFilePosition;
+        }
+
+        var lsCommaCount = lsSpace[0].Count(chch => chch == ':');
+        if (lsCommaCount < 2)
+        {
+            goto END_GetSelectedTextFilePosition;
+        }
+
+        return lsSpace[0];
+
+    END_GetSelectedTextFilePosition:
+        return GetSelectedItems().ToDelimited(Environment.NewLine);
+    }
+
     public IEnumerable<string> GetSelectedItems()
     {
         return _selected.Items.OrderBy(proxy=> proxy.Start).Select(proxy => proxy.Line.Text);

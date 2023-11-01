@@ -12,6 +12,7 @@ public interface ILinesVisualisation : IScrollReceiver, IDisposable
     IProperty<int> Count { get; }
     IProperty<int> MaximumChars { get; }
     ICommand CopyToClipboardCommand { get; }
+    ICommand CopyFilePositionToClipboardCommand { get; }
     ISelectionMonitor SelectionMonitor { get; }
     TextScrollDelegate HorizonalScrollChanged { get; }
     int PageSize { get; set; }
