@@ -61,11 +61,59 @@ public class SelectionMonitor :  ISelectionMonitor, IAttachedListBox
         return GetSelectedItems().ToDelimited(Environment.NewLine);
     }
 
+    public string GetSelectedTextIrcCmd()
+    {
+        var selItems = GetSelectedItems();
+        if (selItems.Count() <= 0)
+        {
+            // 선택 열이 없다
+            goto END_GetSelectedTextFilePosition;
+        }
+
+        var lineCheckString = selItems.FirstOrDefault();
+
+        var ircIndex = lineCheckString.IndexOf("[IRC ");
+        if(ircIndex == -1)
+        {
+            //irc 메시지가 아니다.
+            goto END_GetSelectedTextFilePosition;
+        }
+
+        var ircCmdStart = lineCheckString.IndexOf(" :{", ircIndex);
+        if (ircCmdStart == -1)
+        {
+            //irc '{' 가 없다
+            goto END_GetSelectedTextFilePosition;
+        }
+
+        ircCmdStart += 3;
+
+        var ircCmdEnd = lineCheckString.IndexOf(";", ircCmdStart);
+        if (ircCmdEnd == -1)
+        {
+            //irc ';' 가 없다
+            ircCmdEnd = lineCheckString.IndexOf("}", ircCmdStart);
+            if(ircCmdEnd == -1)
+            {
+                // irc '}' 가 없다
+                goto END_GetSelectedTextFilePosition;
+            }
+        }
+
+        var findStr = lineCheckString.Substring(ircCmdStart, ircCmdEnd - ircCmdStart);
+
+        return findStr;
+
+    END_GetSelectedTextFilePosition:
+        return GetSelectedItems().ToDelimited(Environment.NewLine);
+    }
+
     public string GetSelectedTextFilePosition()
     {
         var selItems = GetSelectedItems();
         if (selItems.Count() <= 0)
         {
+            // 선택 열이 없다
             goto END_GetSelectedTextFilePosition;
         }
 
@@ -74,12 +122,14 @@ public class SelectionMonitor :  ISelectionMonitor, IAttachedListBox
         var lsSpace = lineCheckString.Trim().Split(' ');
         if (lsSpace.Count() < 1)
         {
+            // 공백 분리했는데. 두개가 아니다
             goto END_GetSelectedTextFilePosition;
         }
 
         var lsCommaCount = lsSpace[0].Count(chch => chch == ':');
         if (lsCommaCount < 2)
         {
+            // 콜론 분리했는데 3개가 아니다.
             goto END_GetSelectedTextFilePosition;
         }
 

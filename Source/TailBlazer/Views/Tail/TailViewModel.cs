@@ -59,6 +59,7 @@ public class TailViewModel: AbstractNotifyPropertyChanged, ILinesVisualisation, 
 
     public ICommand CopyToClipboardCommand { get; }
     public ICommand CopyFilePositionToClipboardCommand { get; }
+    public ICommand CopyIrcCmdToClipboardCommand { get; }
     public ICommand OpenFileCommand { get; }
     public ICommand OpenFolderCommand { get; }
     public ICommand CopyPathToClipboardCommand { get; }
@@ -111,6 +112,7 @@ public class TailViewModel: AbstractNotifyPropertyChanged, ILinesVisualisation, 
         SearchHints = searchHints ?? throw new ArgumentNullException(nameof(searchHints));
 
         CopyToClipboardCommand = new Command(() => clipboardHandler.WriteToClipboard(selectionMonitor.GetSelectedText()));
+        CopyIrcCmdToClipboardCommand = new Command(() => clipboardHandler.WriteToClipboard(selectionMonitor.GetSelectedTextIrcCmd()));
         OpenFileCommand = new Command(() => Process.Start(fileWatcher.FullName));
         OpenFolderCommand = new Command(() => Process.Start(fileWatcher.Folder));
         CopyPathToClipboardCommand = new Command(() => clipboardHandler.WriteToClipboard(fileWatcher.FullName));

@@ -14,6 +14,7 @@ public interface ISelectionMonitor: IDisposable
 {
     string GetSelectedText();
     string GetSelectedTextFilePosition();
+    string GetSelectedTextIrcCmd();
 
     IEnumerable<string> GetSelectedItems();
 
