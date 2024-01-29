@@ -98,6 +98,7 @@
                     <RowDefinition Height="{Binding  Path=InlineViewerVisible.Value, Mode=TwoWay, Converter={StaticResource c1}}"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="{Binding  Path=InlineViewerVisible.Value, Mode=TwoWay, Converter={StaticResource c2}}"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
 
@@ -359,7 +360,8 @@
                     ContentTemplate="{StaticResource LinesDataTemplate}"
                     Content="{Binding InlineViewer,Mode=OneWay}" />
 
-                <Grid    Grid.Row="4" Margin = "0 0 0 -4"   Background="{DynamicResource PrimaryHueMidBrush}">
+                <TextBox Grid.Row="4"   Text="{Binding SelectedItem.Line.Text, Mode=OneWay}" />
+                <Grid    Grid.Row="5" Margin = "0 0 0 -4"   Background="{DynamicResource PrimaryHueMidBrush}">
 
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}">
