@@ -95,10 +95,10 @@
                 Margin="-4 0 -4 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="{Binding  Path=InlineViewerVisible.Value, Mode=TwoWay, Converter={StaticResource c1}}"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="{Binding  Path=InlineViewerVisible.Value, Mode=TwoWay, Converter={StaticResource c2}}"/>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
 
@@ -278,12 +278,15 @@
 
                 <Border Grid.Row="0" Grid.Column="0" 
                             Visibility="Collapsed"
-                            BorderThickness="0 0 0 1" BorderBrush="{DynamicResource PrimaryHueMidBrush}"/>
-               
+                            BorderThickness="0 0 0 1" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
+                    <TextBlock>BC1Border</TextBlock>
+                </Border>
+
                 <!--infrastucture:DependencyObjectHook.Receiver="{Binding KeyboardNavigationHandler}"-->
 
+                <TextBox Grid.Row="1"   Text="{Binding SelectedItem.Line.Text, Mode=OneWay}" />
                 <ListBox Margin="0 4 0 2"
-                    Grid.Row="1" 
+                    Grid.Row="2" 
                     VerticalAlignment="Stretch"
                     MinHeight="50"     
                     ItemsSource="{Binding Lines}" 
@@ -348,7 +351,7 @@
                     </ListBox.ContextMenu>
                 </ListBox>
 
-                <GridSplitter Grid.Row="2"
+                <GridSplitter Grid.Row="3"
                           Height="5" 
                           ResizeDirection="Rows"
                           Visibility="{Binding Path=DataContext.InlineViewerVisible.Value, ElementName=Control,Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -356,11 +359,10 @@
                           BorderThickness="1" HorizontalAlignment="Stretch"/>
 
 
-                <ContentPresenter Grid.Row="3"   
+                <ContentPresenter Grid.Row="4"   
                     ContentTemplate="{StaticResource LinesDataTemplate}"
                     Content="{Binding InlineViewer,Mode=OneWay}" />
 
-                <TextBox Grid.Row="4"   Text="{Binding SelectedItem.Line.Text, Mode=OneWay}" />
                 <Grid    Grid.Row="5" Margin = "0 0 0 -4"   Background="{DynamicResource PrimaryHueMidBrush}">
 
                     <Grid.Resources>
