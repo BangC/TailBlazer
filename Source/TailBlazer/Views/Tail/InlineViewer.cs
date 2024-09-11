@@ -11,6 +11,7 @@ using TailBlazer.Domain.Formatting;
 using TailBlazer.Domain.Infrastructure;
 using TailBlazer.Infrastructure;
 using TailBlazer.Infrastructure.Virtualisation;
+using TailBlazer.Views.Formatting;
 
 namespace TailBlazer.Views.Tail;
 
@@ -26,9 +27,19 @@ public class InlineViewer : AbstractNotifyPropertyChanged, ILinesVisualisation
     public ReadOnlyObservableCollection<LineProxy> Lines => _data;
     public IProperty<int> Count { get; }
     public ICommand CopyToClipboardCommand { get; }
+    /// <summary>
+    /// 파일 위치 복사 메뉴 명령
+    /// </summary>
     public ICommand CopyFilePositionToClipboardCommand { get; }
     public IProperty<int> MaximumChars { get; }
     public ISelectionMonitor SelectionMonitor { get; }
+
+    private LineProxy _selectedLine;
+    public LineProxy SelectedItem
+    {
+        get => _selectedLine;
+        set => SetAndRaise(ref _selectedLine, value);
+    }
 
     public InlineViewer([NotNull] IObservable<ILineProvider> lineProvider,
         [NotNull] IObservable<LineProxy> selectedChanged,
@@ -47,6 +58,8 @@ public class InlineViewer : AbstractNotifyPropertyChanged, ILinesVisualisation
         if (themeProvider == null) throw new ArgumentNullException(nameof(themeProvider));
         SelectionMonitor = selectionMonitor ?? throw new ArgumentNullException(nameof(selectionMonitor));
         CopyToClipboardCommand = new Command(() => clipboardHandler.WriteToClipboard(selectionMonitor.GetSelectedText()));
+
+        // 파일 위치 복사
         CopyFilePositionToClipboardCommand = new Command(() => clipboardHandler.WriteToClipboard(selectionMonitor.GetSelectedTextFilePosition()));
 
         _isSettingScrollPosition = false;

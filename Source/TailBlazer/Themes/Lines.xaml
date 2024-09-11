@@ -231,15 +231,24 @@
     </Style>
 
     <DataTemplate x:Key="LinesDataTemplate" DataType="{x:Type tail:ILinesVisualisation}">
-        <ListBox
-            MinHeight="50"
-            infrastucture:ListBoxHelper.SelectionMonitor="{Binding SelectionMonitor}"
-            ItemsSource="{Binding Lines}"
-            Style="{StaticResource LinesListBoxStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBox Grid.Row="0" Text="{Binding SelectedItem.Line.Text, Mode=OneWay}" />
+            <ListBox
+                Grid.Row="1"
+                MinHeight="50"
+                infrastucture:ListBoxHelper.SelectionMonitor="{Binding SelectionMonitor}"
+                ItemsSource="{Binding Lines}"
+                Style="{StaticResource LinesListBoxStyle}"
+                SelectedItem="{Binding SelectedItem}"
+                >
 
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <virtualisation:LinesScrollPanel
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <virtualisation:LinesScrollPanel
                         CharacterWidth="6.59666666666667"
                         HorizontalScrollChanged="{Binding HorizonalScrollChanged}"
                         ItemHeight="20"
@@ -247,39 +256,40 @@
                         StartIndex="{Binding FirstIndex}"
                         TotalCharacters="{Binding MaximumChars.Value, UpdateSourceTrigger=PropertyChanged}"
                         TotalItems="{Binding Count.Value}" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
 
-            <ListBox.InputBindings>
-                <KeyBinding
+                <ListBox.InputBindings>
+                    <KeyBinding
                     Key="C"
                     Command="{Binding CopyToClipboardCommand}"
                     Modifiers="Control" />
-            </ListBox.InputBindings>
+                </ListBox.InputBindings>
 
-            <ListBox.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Command="{Binding CopyToClipboardCommand}" Header="_Copy">
-                        <MenuItem.Icon>
-                            <Viewbox Width="16" Height="16">
-                                <Canvas Width="24" Height="24">
-                                    <Path Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" Fill="{DynamicResource MaterialDesignBody}" />
-                                </Canvas>
-                            </Viewbox>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Command="{Binding CopyFilePositionToClipboardCommand}" Header="File Position">
-                        <MenuItem.Icon>
-                            <Viewbox Width="16" Height="16">
-                                <Canvas Width="24" Height="24">
-                                    <Path Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" Fill="{DynamicResource MaterialDesignBody}" />
-                                </Canvas>
-                            </Viewbox>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </ContextMenu>
-            </ListBox.ContextMenu>
-        </ListBox>
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Command="{Binding CopyToClipboardCommand}" Header="_Copy">
+                            <MenuItem.Icon>
+                                <Viewbox Width="16" Height="16">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" Fill="{DynamicResource MaterialDesignBody}" />
+                                    </Canvas>
+                                </Viewbox>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Command="{Binding CopyFilePositionToClipboardCommand}" Header="File Position">
+                            <MenuItem.Icon>
+                                <Viewbox Width="16" Height="16">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" Fill="{DynamicResource MaterialDesignBody}" />
+                                    </Canvas>
+                                </Viewbox>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
+        </Grid>
     </DataTemplate>
 
 </ResourceDictionary>

@@ -61,6 +61,9 @@ public class SelectionMonitor :  ISelectionMonitor, IAttachedListBox
         return GetSelectedItems().ToDelimited(Environment.NewLine);
     }
 
+    /// <summary>
+    /// irc 커맨드를 추림
+    /// </summary>
     public string GetSelectedTextIrcCmd()
     {
         var selItems = GetSelectedItems();
@@ -108,6 +111,9 @@ public class SelectionMonitor :  ISelectionMonitor, IAttachedListBox
         return GetSelectedItems().ToDelimited(Environment.NewLine);
     }
 
+    /// <summary>
+    /// 선택의 파일 위치 찾기
+    /// </summary>
     public string GetSelectedTextFilePosition()
     {
         var selItems = GetSelectedItems();
@@ -139,6 +145,9 @@ public class SelectionMonitor :  ISelectionMonitor, IAttachedListBox
         return GetSelectedItems().ToDelimited(Environment.NewLine);
     }
 
+    /// <summary>
+    /// 선택 라인 가져오기
+    /// </summary>
     public IEnumerable<string> GetSelectedItems()
     {
         return _selected.Items.OrderBy(proxy=> proxy.Start).Select(proxy => proxy.Line.Text);
